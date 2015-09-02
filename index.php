@@ -15,3 +15,12 @@ require_once('message_post_type.php');
 require_once('feedback_notification.php');
 require_once('add_menu.php');
 require_once('chat_widget.php');
+
+/*
+ * Load assets
+ */
+function wp_gcm_chat_assets_style() {
+    wp_enqueue_style('wp-gcm-chat-assets', plugin_dir_url( __FILE__ ) . 'assets/css/chat.css');
+    wp_enqueue_style('wp-gcm-chat-assets', plugin_dir_url( __FILE__ ) . 'js/jScrollPane/jScrollPane.css');
+}
+add_action('admin_enqueue_scripts', 'wp_gcm_chat_assets_style');

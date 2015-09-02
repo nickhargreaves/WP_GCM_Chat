@@ -19,5 +19,5 @@ add_action( 'wp_dashboard_setup', 'wp_gcm_chat_add_dashboard_widgets' );
 
 function wp_gcm_chat_dashboard_widget_function() {
 
-    
+
 }
