@@ -7,15 +7,12 @@
 
 
 /* Top Bar */
-
-
 #chatTopBar{
 	height:40px;
 	background:url('../img/solid_gray.jpg') repeat-x #d0d0d0;
 	border:1px solid #fff;
 	margin-bottom:15px;
 	position:relative;
-	
 	color:#777;
 	text-shadow:1px 1px 0 #FFFFFF;
 }
@@ -47,7 +44,6 @@
 	min-height:24px;
 	padding:6px;
 	border:1px solid #FFFFFF;
-	
 	padding:8px 6px 4px 37px;
 	position:relative;
 	margin:0 10px 10px 0;
@@ -111,7 +107,7 @@
 	overflow-y: scroll;
 }
 
-#chatUsers .user{
+#chatUsers .user_thumb{
 	background:url('http://www.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?size=30') no-repeat 1px 1px #444444;
 	border:1px solid #111111;
 	float:left;
@@ -120,7 +116,7 @@
 	width:32px;
 }
 
-#chatUsers .user img{
+#chatUsers .user_thumb img{
 	border:1px solid #444444;
 	display:block;
 	visibility:hidden;

@@ -85,3 +85,27 @@ function get_gravatar_url( $email ) {
     $hash = md5( strtolower( trim ( $email ) ) );
     return 'http://gravatar.com/avatar/' . $hash;
 }
+
+/*
+ * Select user to begin chatting
+ */
+
+add_action( 'admin_footer', 'my_action_javascript' ); // Write our JS below here
+
+function my_action_javascript() { ?>
+    <script type="text/javascript" >
+        jQuery(document).ready(function($) {
+            jQuery("#chatBottomBar").hide();
+        });
+        jQuery(".user_thumb").click(function(){
+            //show user details
+            var gravatar = jQuery(this).attr('gravatar');
+            var name = jQuery(this).attr('title');
+            alert(gravatar+name);
+            //show user chat history
+            //show chat box
+            jQuery("#chatBottomBar").show();
+            //hide notification
+        });
+    </script> <?php
+}
