@@ -20,7 +20,7 @@ require_once('chat_widget.php');
  * Load assets
  */
 function wp_gcm_chat_assets_style() {
-    print '<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>';
+    wp_enqueue_script('ajax-jquery', '//ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js', array(), '3', true);
     wp_enqueue_style('wp-gcm-chat-assets-main', plugin_dir_url( __FILE__ ) . 'assets/css/chat.css');
     wp_enqueue_style('wp-gcm-chat-assets-scroll', plugin_dir_url( __FILE__ ) . 'assets/js/jScrollPane/jScrollPane.css');
     wp_enqueue_script( 'wp-gcm-chat-assets-mousewheeljs', plugin_dir_url( __FILE__ ) . 'assets/js/jScrollPane/jquery.mousewheel.js', array(), '1.0.0', true );
