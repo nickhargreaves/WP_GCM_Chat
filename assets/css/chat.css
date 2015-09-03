@@ -160,11 +160,12 @@
 	outline:none;
 }
 
-
+/*
+Show chat box by default
 #submitForm{
 	display:none;
 }
-
+*/
 input#chatText{
 	/* The chat submit text field */
 	width:385px;

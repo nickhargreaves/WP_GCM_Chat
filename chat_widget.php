@@ -29,7 +29,7 @@ function wp_gcm_chat_dashboard_widget_function() {
         <div id="chatBottomBar" class="rounded">
             <div class="tip"></div>
 
-            <form id="loginForm" method="post" action="">
+            <form id="loginForm" method="post" action="" style="display:none;">
                 <input id="name" name="name" class="rounded" maxlength="16" />
                 <input id="email" name="email" class="rounded" />
                 <input type="submit" class="blueButton" value="Login" />
