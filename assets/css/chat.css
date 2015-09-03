@@ -252,6 +252,7 @@ p.noChats,
 	padding:10px;
 	text-align:center;
 	text-shadow:1px 1px 0 #111111;
+	color: #fff;
 }
 
 #chatUsers .count{

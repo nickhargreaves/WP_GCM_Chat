@@ -27,11 +27,17 @@ function wp_gcm_chat_dashboard_widget_function() {
         ?>
         <div id="chatTopBar" class="rounded">
             <span><img src="<?php echo $gravatar_link;?>" width="23" height="23" />
-				<span class="name">,params.name</span><a href="" class="logoutButton rounded">Logout</a></span>
+				<span class="name"><?php echo $current_user->user_nicename?></span><a href="" class="logoutButton rounded">0</a></span>
         </div>
         <div id="chatLineHolder"></div>
 
-        <div id="chatUsers" class="rounded"></div>
+        <div id="chatUsers" class="rounded">
+            <?php
+            $blogusers = get_users( 'blog_id=1&orderby=nicename' );
+
+            ?>
+            <p class="count"><?php print count($blogusers); ?> Total Users</p>
+        </div>
         <div id="chatBottomBar" class="rounded">
             <div class="tip"></div>
 
@@ -43,7 +49,7 @@ function wp_gcm_chat_dashboard_widget_function() {
 
             <form id="submitForm" method="post" action="">
                 <input id="chatText" name="chatText" class="rounded" maxlength="255" />
-                <input type="submit" class="blueButton" value="Submit" />
+                <input type="submit" class="blueButton" value="Send" />
             </form>
 
         </div>
