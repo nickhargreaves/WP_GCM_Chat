@@ -36,7 +36,7 @@ function wp_gcm_chat_dashboard_widget_function() {
             $blogusers = get_users( 'blog_id=1&orderby=nicename' );
 
             ?>
-            <p class="count"><?php print count($blogusers); ?> Total Users</p>
+            <p class="count"><a href="<?php print get_admin_url();?>/users.php"><?php print count($blogusers); ?> Total Users</a></p>
         </div>
         <div id="chatBottomBar" class="rounded">
             <div class="tip"></div>
