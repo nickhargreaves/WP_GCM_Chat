@@ -21,8 +21,14 @@ function wp_gcm_chat_dashboard_widget_function() {
 
     ?>
     <div id="chatContainer">
-
-        <div id="chatTopBar" class="rounded"></div>
+        <?php
+            $current_user = wp_get_current_user();
+            $gravatar_link = get_gravatar_url($current_user->user_email)
+        ?>
+        <div id="chatTopBar" class="rounded">
+            <span><img src="<?php echo $gravatar_link;?>" width="23" height="23" />
+				<span class="name">,params.name</span><a href="" class="logoutButton rounded">Logout</a></span>
+        </div>
         <div id="chatLineHolder"></div>
 
         <div id="chatUsers" class="rounded"></div>
