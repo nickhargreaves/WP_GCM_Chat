@@ -108,6 +108,7 @@
 	right:0;
 	top:56px;
 	width:150px;
+	overflow-y: scroll;
 }
 
 #chatUsers .user{
