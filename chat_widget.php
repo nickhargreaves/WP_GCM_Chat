@@ -23,20 +23,22 @@ function wp_gcm_chat_dashboard_widget_function() {
     <div id="chatContainer">
         <?php
             $current_user = wp_get_current_user();
-            $gravatar_link = get_gravatar_url($current_user->user_email)
+            $gravatar_link = get_gravatar_url($current_user->user_email);
         ?>
         <div id="chatTopBar" class="rounded">
             <span><img src="<?php echo $gravatar_link;?>" width="23" height="23" />
-				<span class="name"><?php echo $current_user->user_nicename?></span><a href="" class="logoutButton rounded">0</a></span>
+				<span class="name"><?php echo $current_user->user_nicename;?></span><a href="" class="logoutButton rounded">0</a></span>
         </div>
         <div id="chatLineHolder"></div>
 
         <div id="chatUsers" class="rounded">
             <?php
-            $blogusers = get_users( 'blog_id=1&orderby=nicename' );
-
+                $blog_users = get_users( 'blog_id=1&orderby=nicename' );
+                foreach($blog_users as $user){
+                    print '<div class="user" title="'.$user->user_nicename.'"><img src="'.get_gravatar_url($user->user_email).'" width="30" height="30" onload="this.style.visibility=\'visible\'" /></div>';
+                }
             ?>
-            <p class="count"><a href="<?php print get_admin_url();?>/users.php"><?php print count($blogusers); ?> Total Users</a></p>
+            <p class="count"><a href="<?php print get_admin_url();?>/users.php"><?php print count($blog_users); ?> Total Users</a></p>
         </div>
         <div id="chatBottomBar" class="rounded">
             <div class="tip"></div>
