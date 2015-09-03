@@ -29,6 +29,7 @@ function wp_gcm_chat_dashboard_widget_function() {
             <span><img src="<?php echo $gravatar_link;?>" width="23" height="23" />
 				<span class="name"><?php echo $current_user->user_nicename;?></span><a href="" class="logoutButton rounded">0</a></span>
         </div>
+        <div id="chatRecipient"></div>
         <div id="chatLineHolder"></div>
 
         <div id="chatUsers" class="rounded">

@@ -276,3 +276,13 @@ p.noChats,
 	
 	text-shadow:1px 1px 0 #940f0f;
 }
+#chatRecipient{
+	width: 50%;
+	padding: 10px;
+	height: 60px;
+	font-size: 2em;
+}
+#chatRecipient img{
+	width: 40px;
+	margin-right: 10px;
+}

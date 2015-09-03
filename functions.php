@@ -100,8 +100,10 @@ function my_action_javascript() { ?>
         jQuery(".user_thumb").click(function(){
             //show user details
             var gravatar = jQuery(this).attr('gravatar');
-            var name = jQuery(this).attr('title');
-            alert(gravatar+name);
+            var username = jQuery(this).attr('title');
+
+            jQuery('#chatRecipient').html("<img src='" +gravatar+"'>" + username);
+
             //show user chat history
             //show chat box
             jQuery("#chatBottomBar").show();
