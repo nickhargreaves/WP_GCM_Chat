@@ -35,10 +35,11 @@ function wp_gcm_chat_dashboard_widget_function() {
             <?php
                 $blog_users = get_users( 'blog_id=1&orderby=nicename' );
                 foreach($blog_users as $user){
-                    print '<div class="user" title="'.$user->user_nicename.'"><img src="'.get_gravatar_url($user->user_email).'" width="30" height="30" onload="this.style.visibility=\'visible\'" /></div>';
+                    if($user->user_nicename != $current_user->user_nicename)
+                        print '<div class="user" title="'.$user->user_nicename.'"><img src="'.get_gravatar_url($user->user_email).'" width="30" height="30" onload="this.style.visibility=\'visible\'" /></div>';
                 }
             ?>
-            <p class="count"><a href="<?php print get_admin_url();?>/users.php"><?php print count($blog_users); ?> Total Users</a></p>
+            <p class="count"><a href="<?php print get_admin_url();?>/users.php"><?php print count($blog_users)-1; ?> Total Users</a></p>
         </div>
         <div id="chatBottomBar" class="rounded">
             <div class="tip"></div>
