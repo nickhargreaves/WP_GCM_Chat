@@ -1,8 +1,7 @@
 /* Main chat container */
 
 #chatContainer{
-	width:510px;
-	margin:100px auto;
+	width:100%;
 	position:relative;
 }
 
