@@ -127,7 +127,8 @@ function chat_action_javascript() { ?>
                 id			: tempID,
                 text		: text.replace(/</g,'&lt;').replace(/>/g,'&gt;'),
                 author      : jQuery("#chatForm").attr("author"),
-                gravatar    : jQuery("#chatForm").attr("gravatar")
+                gravatar    : jQuery("#chatForm").attr("gravatar"),
+                recipient   : jQuery(".user_thumb").attr("title")
             };
 
         // add the chat
@@ -193,6 +194,13 @@ function chat_action_javascript() { ?>
             chat.data.jspAPI.reinitialise();
             chat.data.jspAPI.scrollToBottom(true);
 
+            //send chat to user
+            jQuery.post("<?php print plugins_url( 'create_message.php', __FILE__ );?>",
+                {
+                    author: params.author,
+                    message: params.text,
+                    recipient: params.recipient
+                });
 
         });
 
