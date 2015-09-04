@@ -33,18 +33,38 @@ function wp_gcm_chat_dashboard_widget_function() {
         <div id="chatLineHolder"></div>
         <div id="inbox">
             <table cellspacing="0">
-                <tr>
-                    <th scope="row">Model</th>
-                    <td>M9457LL/A</td>
-                </tr>
-                <tr>
-                    <th scope="row">Model</th>
-                    <td>M9457LL/A</td>
-                </tr>
-                <tr>
-                    <th scope="row">Model</th>
-                    <td>M9457LL/A</td>
-                </tr>
+                <?php
+                /*
+                 * show latest messages
+                 */
+                    $args = array(
+                        'posts_per_page'   => 50,
+                        'offset'           => 0,
+                        'category'         => '',
+                        'category_name'    => '',
+                        'orderby'          => 'date',
+                        'order'            => 'DESC',
+                        'include'          => '',
+                        'exclude'          => '',
+                        'meta_key'         => 'recipient',
+                        'meta_value'       => $current_user->user_nicename,
+                        'post_type'        => 'message',
+                        'post_mime_type'   => '',
+                        'post_parent'      => '',
+                        'author'	   => '',
+                        'post_status'      => 'draft',
+                        'suppress_filters' => true
+                    );
+                    $messages = get_posts($args);
+
+                    foreach($messages as $message){
+                        print_r($message);
+                        print '<tr>
+                            <th scope="row"></th>
+                            <td>'.$message->post_title.'</td>
+                        </tr>';
+                    }
+                ?>
                 </table>
             </div>
 
