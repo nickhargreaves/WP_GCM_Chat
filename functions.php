@@ -97,7 +97,16 @@ function chat_action_javascript() { ?>
 
         jQuery(document).ready(function($) {
             jQuery("#chatBottomBar").hide();
+            jQuery("#chatLineHolder").hide();
+            jQuery("#chatRecipient").hide();
+            jQuery("#inbox").show();
 
+        });
+        jQuery("#inbox-button").click(function(){
+            jQuery("#chatBottomBar").hide();
+            jQuery("#chatLineHolder").hide();
+            jQuery("#chatRecipient").hide();
+            jQuery("#inbox").show();
         });
         jQuery(".user_thumb").click(function(){
             //show user details
@@ -108,7 +117,10 @@ function chat_action_javascript() { ?>
 
             //show user chat history
             //show chat box
+            jQuery("#inbox").hide();
             jQuery("#chatBottomBar").show();
+            jQuery("#chatLineHolder").show();
+            jQuery("#chatRecipient").show();
             //hide notification
         });
         jQuery('#submitChat').click(function() {

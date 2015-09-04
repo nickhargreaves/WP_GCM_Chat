@@ -3,6 +3,7 @@
 #chatContainer{
 	width:100%;
 	position:relative;
+	min-height: 500px;
 }
 
 
@@ -308,3 +309,16 @@ p.noChats,
 	right:10px;
 	top:7px;
 }
+/**
+	Inbox
+	*/
+#inbox{
+	margin-bottom:20px;
+	height:360px;
+	width:350px;
+}
+#inbox table{
+	width: 100%;
+}
+#inbox tr:nth-child(even) {background: #CCC}
+#inbox tr:nth-child(odd) {background: #FFF}

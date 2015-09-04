@@ -31,6 +31,22 @@ function wp_gcm_chat_dashboard_widget_function() {
         </div>
         <div id="chatRecipient"></div>
         <div id="chatLineHolder"></div>
+        <div id="inbox">
+            <table cellspacing="0">
+                <tr>
+                    <th scope="row">Model</th>
+                    <td>M9457LL/A</td>
+                </tr>
+                <tr>
+                    <th scope="row">Model</th>
+                    <td>M9457LL/A</td>
+                </tr>
+                <tr>
+                    <th scope="row">Model</th>
+                    <td>M9457LL/A</td>
+                </tr>
+                </table>
+            </div>
 
         <div id="chatUsers" class="rounded">
             <?php
