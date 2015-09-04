@@ -90,12 +90,14 @@ function get_gravatar_url( $email ) {
  * Select user to begin chatting
  */
 
-add_action( 'admin_footer', 'my_action_javascript' ); // Write our JS below here
+add_action( 'admin_footer', 'chat_action_javascript' ); // Write our JS below here
 
-function my_action_javascript() { ?>
+function chat_action_javascript() { ?>
     <script type="text/javascript" >
+
         jQuery(document).ready(function($) {
             jQuery("#chatBottomBar").hide();
+
         });
         jQuery(".user_thumb").click(function(){
             //show user details
@@ -109,5 +111,91 @@ function my_action_javascript() { ?>
             jQuery("#chatBottomBar").show();
             //hide notification
         });
+        jQuery('#submitChat').click(function() {
+
+            var text = jQuery('#chatText').val();
+
+            if (text.length == 0) {
+                return false;
+            }
+
+            jQuery('#chatText').val("");
+
+        // Assigning a temporary ID to the chat:
+        var tempID = 't'+Math.round(Math.random()*1000000),
+            params = {
+                id			: tempID,
+                text		: text.replace(/</g,'&lt;').replace(/>/g,'&gt;'),
+                author      : jQuery("#chatForm").attr("author"),
+                gravatar    : jQuery("#chatForm").attr("gravatar")
+            };
+
+        // add the chat
+        // to the screen immediately, without waiting for
+        // the AJAX request to complete:
+        // All times are displayed in the user's timezone
+
+            var d = new Date();
+            if(params.time) {
+
+                // PHP returns the time in UTC (GMT). We use it to feed the date
+                // object and later output it in the user's timezone. JavaScript
+                // internally converts it for us.
+
+                d.setUTCHours(params.time.hours,params.time.minutes);
+            }
+
+            params.time = (d.getHours() < 10 ? '0' : '' ) + d.getHours()+':'+
+                (d.getMinutes() < 10 ? '0':'') + d.getMinutes();
+
+            //var markup = chat.render('chatLine',params),
+            var markup = '<div class="chat chat-' + params.id + ' rounded">' + '<span class="gravatar"><img src="'+params.gravatar+'" width="23" height="23" onload="this.style.visibility=\'visible\'" /></span><span class="author">' + params.author + ':</span><span class="text">' + params.text + '</span><span class="time">' + params.time + '</span></div>';
+
+            var exists = jQuery('#chatLineHolder .chat-'+params.id);
+
+            if(exists.length){
+                exists.remove();
+            }
+            var chat = {
+
+                // data holds variables for use in the class:
+
+                data: {
+                    lastID: 0,
+                    noActivity: 0
+                }
+            }
+            chat.data.jspAPI = jQuery('#chatLineHolder').jScrollPane({
+                verticalDragMinHeight: 12,
+                verticalDragMaxHeight: 12
+            }).data('jsp');
+
+            if(!chat.data.lastID){
+                // If this is the first chat, remove the
+                // paragraph saying there aren't any:
+
+                jQuery('#chatLineHolder p').remove();
+            }
+
+            // If this isn't a temporary chat:
+            if(params.id.toString().charAt(0) != 't'){
+                var previous = jQuery('#chatLineHolder .chat-'+(+params.id - 1));
+                if(previous.length){
+                    previous.after(markup);
+                }
+                else chat.data.jspAPI.getContentPane().append(markup);
+            }
+            else chat.data.jspAPI.getContentPane().append(markup);
+
+            // As we added new content, we need to
+            // reinitialise the jScrollPane plugin:
+
+            chat.data.jspAPI.reinitialise();
+            chat.data.jspAPI.scrollToBottom(true);
+
+
+        });
+
+
     </script> <?php
 }

@@ -99,7 +99,7 @@
 #chatUsers{
 	background-color:#202020;
 	border:1px solid #111111;
-	height:360px;
+	height:450px;
 	position:absolute;
 	right:0;
 	top:56px;
@@ -124,7 +124,6 @@
 
 
 /* Bottom Bar */
-
 
 #chatBottomBar{
 	background:url('../img/solid_gray.jpg') repeat-x #d0d0d0;
@@ -277,7 +276,6 @@ p.noChats,
 	text-shadow:1px 1px 0 #940f0f;
 }
 #chatRecipient{
-	width: 50%;
 	padding: 10px;
 	height: 60px;
 	font-size: 2em;
@@ -286,3 +284,7 @@ p.noChats,
 	width: 40px;
 	margin-right: 10px;
 }
+
+/*
+	Fancy scroll bar
+*/

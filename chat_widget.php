@@ -45,16 +45,10 @@ function wp_gcm_chat_dashboard_widget_function() {
         <div id="chatBottomBar" class="rounded">
             <div class="tip"></div>
 
-            <form id="loginForm" method="post" action="" style="display:none;">
-                <input id="name" name="name" class="rounded" maxlength="16" />
-                <input id="email" name="email" class="rounded" />
-                <input type="submit" class="blueButton" value="Login" />
-            </form>
-
-            <form id="submitForm" method="post" action="">
+            <div id="chatForm" author="<?php echo $current_user->user_nicename;?>" gravatar="<?php echo $gravatar_link;?>">
                 <input id="chatText" name="chatText" class="rounded" maxlength="255" />
-                <input type="submit" class="blueButton" value="Send" />
-            </form>
+                <input id="submitChat" type="submit" class="blueButton" value="Send" />
+            </div>
 
         </div>
 
