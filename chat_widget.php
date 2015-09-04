@@ -26,8 +26,8 @@ function wp_gcm_chat_dashboard_widget_function() {
             $gravatar_link = get_gravatar_url($current_user->user_email);
         ?>
         <div id="chatTopBar" class="rounded">
-            <span><img src="<?php echo $gravatar_link;?>" width="23" height="23" />
-				<span class="name"><?php echo $current_user->user_nicename;?></span><a href="" class="logoutButton rounded">0</a></span>
+            <span><img id="user_thumb" src="<?php echo $gravatar_link;?>" width="23" height="23" />
+				<span class="name"><?php echo $current_user->user_nicename;?></span><img id="inbox-button" src="<?php echo plugins_url( 'assets/img/inbox.png', __FILE__ );?>"></span>
         </div>
         <div id="chatRecipient"></div>
         <div id="chatLineHolder"></div>
