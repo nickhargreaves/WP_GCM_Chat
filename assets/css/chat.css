@@ -322,3 +322,16 @@ p.noChats,
 }
 #inbox tr:nth-child(even) {background: #CCC}
 #inbox tr:nth-child(odd) {background: #FFF}
+#inbox tr{
+	height: 40px;
+}
+#inbox th{
+	width: 40px;
+	padding: 5px;
+}
+#inbox th{
+	padding: 5px;
+}
+#inbox tr img{
+	height: 40px;
+}

@@ -38,7 +38,7 @@ function wp_gcm_chat_dashboard_widget_function() {
                  * show latest messages
                  */
                     $args = array(
-                        'posts_per_page'   => 50,
+                        'posts_per_page'   => 500000,
                         'offset'           => 0,
                         'category'         => '',
                         'category_name'    => '',
@@ -58,9 +58,11 @@ function wp_gcm_chat_dashboard_widget_function() {
                     $messages = get_posts($args);
 
                     foreach($messages as $message){
-                        print_r($message);
+                        //get user by id
+                        $author = get_userdata($message->post_author);
+                        $author_gravatar = get_gravatar_url($author->user_email);
                         print '<tr>
-                            <th scope="row"></th>
+                            <th scope="row"><img src="'.$author_gravatar.'"></th>
                             <td>'.$message->post_title.'</td>
                         </tr>';
                     }
