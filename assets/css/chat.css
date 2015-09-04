@@ -316,6 +316,7 @@ p.noChats,
 	margin-bottom:20px;
 	height:360px;
 	width:350px;
+	overflow-y: scroll;
 }
 #inbox table{
 	width: 100%;
