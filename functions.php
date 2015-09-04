@@ -139,6 +139,7 @@ function chat_action_javascript() { ?>
                 id			: tempID,
                 text		: text.replace(/</g,'&lt;').replace(/>/g,'&gt;'),
                 author      : jQuery("#chatForm").attr("author"),
+                author_id      : jQuery("#chatForm").attr("author_id"),
                 gravatar    : jQuery("#chatForm").attr("gravatar"),
                 recipient   : jQuery(".user_thumb").attr("title")
             };
@@ -209,7 +210,7 @@ function chat_action_javascript() { ?>
             //send chat to user
             jQuery.post("<?php print plugins_url( 'create_message.php', __FILE__ );?>",
                 {
-                    author: params.author,
+                    author: params.author_id,
                     message: params.text,
                     recipient: params.recipient
                 });

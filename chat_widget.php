@@ -81,7 +81,7 @@ function wp_gcm_chat_dashboard_widget_function() {
         <div id="chatBottomBar" class="rounded">
             <div class="tip"></div>
 
-            <div id="chatForm" author="<?php echo $current_user->user_nicename;?>" gravatar="<?php echo $gravatar_link;?>">
+            <div id="chatForm" author_id="<?php echo $current_user->ID;?>" author="<?php echo $current_user->user_nicename;?>" gravatar="<?php echo $gravatar_link;?>">
                 <input id="chatText" name="chatText" class="rounded" maxlength="255" />
                 <input id="submitChat" type="submit" class="blueButton" value="Send" />
             </div>
