@@ -29,7 +29,7 @@ function register_message() {
         'description'   => 'Defines message structure',
         'public'        => true,
         'menu_position' => 6,
-        'supports'      => array( 'title'),
+        'supports'      => array( 'title', 'custom-fields'),
         'has_archive'   => false,
     );
     register_post_type( 'message', $args );
