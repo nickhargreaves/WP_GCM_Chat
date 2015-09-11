@@ -88,17 +88,38 @@ function wp_gcm_chat_dashboard_widget_function() {
                     }
                     array_multisort($arr, SORT_DESC, $messages);
 
-                    //add to array by id and ignore if already added
+                    //add to array by id, user and ignore if already added
+                    $displayed_messages = array();
+                    $displayed_users = array();
 
                     foreach($messages as $message){
-                        print $message->ID."<br/>";
-                        //get user by id
-                        $author = get_userdata($message->post_author);
-                        $author_gravatar = get_gravatar_url($author->user_email);
-                        print '<tr>
-                            <th scope="row"><img src="'.$author_gravatar.'"></th>
-                            <td>'.$message->post_title.'</td>
-                        </tr>';
+
+                        //check if id and user not already added
+                        if(!in_array($message->ID, $displayed_messages)) {
+                            $author = get_userdata($message->post_author);
+
+                            if($current_user->nickname != $author->nickname){
+                                $display_gravatar = get_gravatar_url($author->user_email);
+                                $display_name = $author->nickname;
+                            }else{
+                                //current user is author, so get recipient instead
+                                $recipient_nickname = get_post_meta($message->ID, 'recipient', true);
+                                $recipient = get_user_by('login', $recipient_nickname);
+                                $display_gravatar = get_gravatar_url($recipient->user_email);
+                                $display_name = $recipient->nickname;
+                            }
+                            if(!in_array($display_name, $displayed_users)){
+                                print '<tr>
+                                <th scope="row"><img src="' . $display_gravatar . '"></th>
+                                <td>' . $display_name . '</td>
+                                <td>' . $message->post_title . '</td>
+                                </tr>';
+                                //add this to array of displayed messages
+                                $displayed_messages[] = $message->ID;
+                                //add user to array of displayed
+                                $displayed_users[] = $display_name;
+                            }
+                        }
                     }
                 ?>
                 </table>
