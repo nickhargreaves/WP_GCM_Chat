@@ -94,6 +94,10 @@ add_action( 'admin_footer', 'chat_action_javascript' ); // Write our JS below he
 
 function chat_action_javascript() { ?>
     <script type="text/javascript" >
+        jQuery.post("<?php print plugins_url( 'load_messages.php', __FILE__ );?>")
+            .done(function( data ) {
+                jQuery("#inbox").html(data);
+            });
 
         jQuery(document).ready(function($) {
             jQuery("#chatBottomBar").hide();
@@ -107,6 +111,12 @@ function chat_action_javascript() { ?>
             jQuery("#chatLineHolder").hide();
             jQuery("#chatRecipient").hide();
             jQuery("#inbox").show();
+
+            //reload messages
+            jQuery.post("<?php print plugins_url( 'load_messages.php', __FILE__ );?>")
+                .done(function( data ) {
+                    jQuery("#inbox").html(data);
+                });
         });
         jQuery(".user_thumb").click(function(){
             //show user details
@@ -116,6 +126,8 @@ function chat_action_javascript() { ?>
             jQuery('#chatRecipient').html("<img src='" +gravatar+"'>" + username);
 
             //show user chat history
+
+
             //show chat box
             jQuery("#inbox").hide();
             jQuery("#chatBottomBar").show();
@@ -213,6 +225,9 @@ function chat_action_javascript() { ?>
                     author: params.author_id,
                     message: params.text,
                     recipient: params.recipient
+                })
+                .done(function( data ) {
+                    alert( "Data Loaded: " + data );
                 });
 
         });
