@@ -79,12 +79,19 @@ function wp_gcm_chat_dashboard_widget_function() {
                     $messages_author = get_posts($args);
 
                     //now combine both
-                    //sort by date
+                    $messages = $messages_recipient + $messages_author;
+                    //sort by latest
+                    $arr = array();
+                    foreach ($messages as $key => $row)
+                    {
+                        $arr[$key] = $row->ID;
+                    }
+                    array_multisort($arr, SORT_DESC, $messages);
+
                     //add to array by id and ignore if already added
 
-                    $messages = $messages_recipient + $messages_author;
-
                     foreach($messages as $message){
+                        print $message->ID."<br/>";
                         //get user by id
                         $author = get_userdata($message->post_author);
                         $author_gravatar = get_gravatar_url($author->user_email);
