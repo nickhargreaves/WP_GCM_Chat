@@ -37,6 +37,8 @@ function wp_gcm_chat_dashboard_widget_function() {
                 /*
                  * show latest messages
                  */
+                    //Get where current user is recipient
+
                     $args = array(
                         'posts_per_page'   => 500000,
                         'offset'           => 0,
@@ -55,7 +57,32 @@ function wp_gcm_chat_dashboard_widget_function() {
                         'post_status'      => 'draft',
                         'suppress_filters' => true
                     );
-                    $messages = get_posts($args);
+                    $messages_recipient = get_posts($args);
+
+                    //Get where current user is author
+                    $args = array(
+                        'posts_per_page'   => 500000,
+                        'offset'           => 0,
+                        'category'         => '',
+                        'category_name'    => '',
+                        'orderby'          => 'date',
+                        'order'            => 'DESC',
+                        'include'          => '',
+                        'exclude'          => '',
+                        'post_type'        => 'message',
+                        'post_mime_type'   => '',
+                        'post_parent'      => '',
+                        'author'	   => $current_user->user_nicename,
+                        'post_status'      => 'draft',
+                        'suppress_filters' => true
+                    );
+                    $messages_author = get_posts($args);
+
+                    //now combine both
+                    //sort by date
+                    //add to array by id and ignore if already added
+
+                    $messages = $messages_recipient + $messages_author;
 
                     foreach($messages as $message){
                         //get user by id
