@@ -32,8 +32,7 @@ function wp_gcm_chat_dashboard_widget_function() {
         <div id="chatRecipient"></div>
         <div id="chatLineHolder"></div>
         <div id="inbox">
-
-            </div>
+        </div>
 
         <div id="chatUsers" class="rounded">
             <?php
@@ -45,6 +44,7 @@ function wp_gcm_chat_dashboard_widget_function() {
             ?>
             <p class="count"><a href="<?php print get_admin_url();?>/users.php"><?php print count($blog_users)-1; ?> Total Users</a></p>
         </div>
+
         <div id="chatBottomBar" class="rounded">
             <div class="tip"></div>
 

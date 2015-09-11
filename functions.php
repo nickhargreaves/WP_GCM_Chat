@@ -124,9 +124,14 @@ function chat_action_javascript() { ?>
             var username = jQuery(this).attr('title');
 
             jQuery('#chatRecipient').html("<img src='" +gravatar+"'>" + username);
-
             //show user chat history
-
+            jQuery.post("<?php print plugins_url( 'user_chat_history.php', __FILE__ );?>",
+                {
+                    username: username,
+                })
+                .done(function( data ) {
+                    jQuery("#chatLineHolder").html(data);
+                });
 
             //show chat box
             jQuery("#inbox").hide();
@@ -225,9 +230,6 @@ function chat_action_javascript() { ?>
                     author: params.author_id,
                     message: params.text,
                     recipient: params.recipient
-                })
-                .done(function( data ) {
-                    alert( "Data Loaded: " + data );
                 });
 
         });

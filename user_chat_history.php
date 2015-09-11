@@ -8,6 +8,8 @@ require(realpath(dirname(__FILE__)).'/../../../wp-blog-header.php');
                  * show latest messages
                  */
                     //Get where current user is recipient
+                $user = $_POST['username'];
+                
                 $current_user = wp_get_current_user();
                     $args = array(
                         'posts_per_page'   => 500000,
@@ -19,11 +21,11 @@ require(realpath(dirname(__FILE__)).'/../../../wp-blog-header.php');
                         'include'          => '',
                         'exclude'          => '',
                         'meta_key'         => 'recipient',
-                        'meta_value'       => $current_user->user_nickname,
+                        'meta_value'       => $current_user->user_nicename,
                         'post_type'        => 'message',
                         'post_mime_type'   => '',
                         'post_parent'      => '',
-                        'author'	   => '',
+                        'author'	   => $user,
                         'post_status'      => 'draft',
                         'suppress_filters' => true
                     );
@@ -39,10 +41,12 @@ require(realpath(dirname(__FILE__)).'/../../../wp-blog-header.php');
                         'order'            => 'DESC',
                         'include'          => '',
                         'exclude'          => '',
+                        'meta_key'         => 'recipient',
+                        'meta_value'       => $user,
                         'post_type'        => 'message',
                         'post_mime_type'   => '',
                         'post_parent'      => '',
-                        'author'	   => $current_user->user_nickname,
+                        'author'	   => $current_user->user_nicename,
                         'post_status'      => 'draft',
                         'suppress_filters' => true
                     );
@@ -60,7 +64,6 @@ require(realpath(dirname(__FILE__)).'/../../../wp-blog-header.php');
 
                     //add to array by id, user and ignore if already added
                     $displayed_messages = array();
-                    $displayed_users = array();
 
                     foreach($messages as $message){
 
@@ -68,27 +71,18 @@ require(realpath(dirname(__FILE__)).'/../../../wp-blog-header.php');
                         if(!in_array($message->ID, $displayed_messages)) {
                             $author = get_userdata($message->post_author);
 
-                            if($current_user->nickname != $author->nickname){
-                                $display_gravatar = get_gravatar_url($author->user_email);
-                                $display_name = $author->nickname;
-                            }else{
-                                //current user is author, so get recipient instead
-                                $recipient_nickname = get_post_meta($message->ID, 'recipient', true);
-                                $recipient = get_user_by('login', $recipient_nickname);
-                                $display_gravatar = get_gravatar_url($recipient->user_email);
-                                $display_name = $recipient->nickname;
-                            }
-                            if(!in_array($display_name, $displayed_users)){
-                                print '<tr>
-                                <th scope="row"><img src="' . $display_gravatar . '"></th>
-                                <td><span class="inbox_name">' . $display_name . '</span></br>
-                                <span class="inbox_text">' . $message->post_title . '</span>
-                                </tr>';
+                            $display_gravatar = get_gravatar_url($author->user_email);
+                            $display_name = $author->nickname;
+
+
+                                print '<div class="chat chat-'.$message->ID.' rounded">
+                                    <span class="gravatar"><img src="'.$display_gravatar.'" width="23" height="23" onload="this.style.visibility=\'visible\'" /></span>
+                                    <span class="author">'.$display_name.':</span><span class="text">' . $message->post_title .'</span>
+                                    <span class="time">'.$message->post_date.'</span></div>';
+
                                 //add this to array of displayed messages
                                 $displayed_messages[] = $message->ID;
-                                //add user to array of displayed
-                                $displayed_users[] = $display_name;
-                            }
+
                         }
                     }
                 ?>
