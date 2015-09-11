@@ -79,7 +79,7 @@ function wp_gcm_chat_dashboard_widget_function() {
                     $messages_author = get_posts($args);
 
                     //now combine both
-                    $messages = $messages_recipient + $messages_author;
+                    $messages = array_merge($messages_recipient, $messages_author);
                     //sort by latest
                     $arr = array();
                     foreach ($messages as $key => $row)
@@ -111,8 +111,8 @@ function wp_gcm_chat_dashboard_widget_function() {
                             if(!in_array($display_name, $displayed_users)){
                                 print '<tr>
                                 <th scope="row"><img src="' . $display_gravatar . '"></th>
-                                <td>' . $display_name . '</td>
-                                <td>' . $message->post_title . '</td>
+                                <td><span class="inbox_name">' . $display_name . '</span></br>
+                                <span class="inbox_text">' . $message->post_title . '</span>
                                 </tr>';
                                 //add this to array of displayed messages
                                 $displayed_messages[] = $message->ID;

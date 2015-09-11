@@ -335,3 +335,10 @@ p.noChats,
 #inbox tr img{
 	height: 40px;
 }
+.inbox_name{
+	font-size: 0.8em;
+	font-weight: bold;
+}
+.inbox_text{
+	font-size: 1.3em;
+}
