@@ -79,7 +79,7 @@ require(realpath(dirname(__FILE__)).'/../../../wp-blog-header.php');
                                 $display_name = $recipient->nickname;
                             }
                             if(!in_array($display_name, $displayed_users)){
-                                print '<tr>
+                                print '<tr class="user_row" title="'.$display_name.'"  gravatar="'.$display_gravatar.'"'.$display_name.'">
                                 <th scope="row"><img src="' . $display_gravatar . '"></th>
                                 <td><span class="inbox_name">' . $display_name . '</span></br>
                                 <span class="inbox_text">' . $message->post_title . '</span>

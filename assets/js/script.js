@@ -1,4 +1,4 @@
-$(document).ready(function(){
+jQuery(document).ready(function(){
 
 	// Run the init method on document ready:
 	chat.init();
@@ -19,8 +19,8 @@ var chat = {
 	init : function(){
 
 		// Using the defaultText jQuery plugin, included at the bottom:
-		$('#name').defaultText('Nickname');
-		$('#email').defaultText('Email (Gravatars are Enabled)');
+		jQuery('#name').defaultText('Nickname');
+		jQuery('#email').defaultText('Email (Gravatars are Enabled)');
 
 		// Converting the #chatLineHolder div into a jScrollPane,
 		// and saving the plugin's API in chat.data:
@@ -37,7 +37,7 @@ var chat = {
 
 		// Logging a person in the chat:
 
-		$('#loginForm').submit(function(){
+		jQuery('#loginForm').submit(function(){
 
 			if(working) return false;
 			working = true;
@@ -45,7 +45,7 @@ var chat = {
 			// Using our tzPOST wrapper function
 			// (defined in the bottom):
 
-			$.tzPOST('login',$(this).serialize(),function(r){
+			jQuery.tzPOST('login',jQuery(this).serialize(),function(r){
 				working = false;
 
 				if(r.error){
@@ -59,9 +59,9 @@ var chat = {
 
 		// Submitting a new chat entry:
 
-		$('#submitForm').submit(function(){
+		jQuery('#submitForm').submit(function(){
 
-			var text = $('#chatText').val();
+			var text = jQuery('#chatText').val();
 
 			if(text.length == 0){
 				return false;
@@ -83,19 +83,19 @@ var chat = {
 			// to the screen immediately, without waiting for
 			// the AJAX request to complete:
 
-			chat.addChatLine($.extend({},params));
+			chat.addChatLine(jQuery.extend({},params));
 
 			// Using our tzPOST wrapper method to send the chat
 			// via a POST AJAX request:
 
-			$.tzPOST('submitChat',$(this).serialize(),function(r){
+			jQuery.tzPOST('submitChat',jQuery(this).serialize(),function(r){
 				working = false;
 
-				$('#chatText').val('');
-				$('div.chat-'+tempID).remove();
+				jQuery('#chatText').val('');
+				jQuery('div.chat-'+tempID).remove();
 
 				params['id'] = r.insertID;
-				chat.addChatLine($.extend({},params));
+				chat.addChatLine(jQuery.extend({},params));
 			});
 
 			return false;
@@ -103,24 +103,24 @@ var chat = {
 
 		// Logging the user out:
 
-		$('a.logoutButton').live('click',function(){
+		jQuery('a.logoutButton').live('click',function(){
 
-			$('#chatTopBar > span').fadeOut(function(){
-				$(this).remove();
+			jQuery('#chatTopBar > span').fadeOut(function(){
+				jQuery(this).remove();
 			});
 
-			$('#submitForm').fadeOut(function(){
-				$('#loginForm').fadeIn();
+			jQuery('#submitForm').fadeOut(function(){
+				jQuery('#loginForm').fadeIn();
 			});
 
-			$.tzPOST('logout');
+			jQuery.tzPOST('logout');
 
 			return false;
 		});
 
 		// Checking whether the user is already logged (browser refresh)
 
-		$.tzGET('checkLogged',function(r){
+		jQuery.tzGET('checkLogged',function(r){
 			if(r.logged){
 				chat.login(r.loggedAs.name,r.loggedAs.gravatar);
 			}
@@ -145,11 +145,11 @@ var chat = {
 
 		chat.data.name = name;
 		chat.data.gravatar = gravatar;
-		$('#chatTopBar').html(chat.render('loginTopBar',chat.data));
+		jQuery('#chatTopBar').html(chat.render('loginTopBar',chat.data));
 
-		$('#loginForm').fadeOut(function(){
-			$('#submitForm').fadeIn();
-			$('#chatText').focus();
+		jQuery('#loginForm').fadeOut(function(){
+			jQuery('#submitForm').fadeIn();
+			jQuery('#chatText').focus();
 		});
 
 	},
@@ -210,7 +210,7 @@ var chat = {
 					  (d.getMinutes() < 10 ? '0':'') + d.getMinutes();
 
 		var markup = chat.render('chatLine',params),
-			exists = $('#chatLineHolder .chat-'+params.id);
+			exists = jQuery('#chatLineHolder .chat-'+params.id);
 
 		if(exists.length){
 			exists.remove();
@@ -220,12 +220,12 @@ var chat = {
 			// If this is the first chat, remove the
 			// paragraph saying there aren't any:
 
-			$('#chatLineHolder p').remove();
+			jQuery('#chatLineHolder p').remove();
 		}
 
 		// If this isn't a temporary chat:
 		if(params.id.toString().charAt(0) != 't'){
-			var previous = $('#chatLineHolder .chat-'+(+params.id - 1));
+			var previous = jQuery('#chatLineHolder .chat-'+(+params.id - 1));
 			if(previous.length){
 				previous.after(markup);
 			}
@@ -245,7 +245,7 @@ var chat = {
 	// (since lastID), and adds them to the page.
 
 	getChats : function(callback){
-		$.tzGET('getChats',{lastID: chat.data.lastID},function(r){
+		jQuery.tzGET('getChats',{lastID: chat.data.lastID},function(r){
 
 			for(var i=0;i<r.chats.length;i++){
 				chat.addChatLine(r.chats[i]);
@@ -292,7 +292,7 @@ var chat = {
 	// Requesting a list with all the users.
 
 	getUsers : function(callback){
-		$.tzGET('getUsers',function(r){
+		jQuery.tzGET('getUsers',function(r){
 
 			var users = [];
 
@@ -313,7 +313,7 @@ var chat = {
 
 			users.push('<p class="count">'+message+'</p>');
 
-			$('#chatUsers').html(users.join(''));
+			jQuery('#chatUsers').html(users.join(''));
 
 			setTimeout(callback,15000);
 		});
@@ -322,14 +322,14 @@ var chat = {
 	// This method displays an error message on the top of the page:
 
 	displayError : function(msg){
-		var elem = $('<div>',{
+		var elem = jQuery('<div>',{
 			id		: 'chatErrorMessage',
 			html	: msg
 		});
 
 		elem.click(function(){
-			$(this).fadeOut(function(){
-				$(this).remove();
+			jQuery(this).fadeOut(function(){
+				jQuery(this).remove();
 			});
 		});
 
@@ -343,17 +343,17 @@ var chat = {
 
 // Custom GET & POST wrappers:
 
-$.tzPOST = function(action,data,callback){
-	$.post('php/ajax.php?action='+action,data,callback,'json');
+jQuery.tzPOST = function(action,data,callback){
+	jQuery.post('php/ajax.php?action='+action,data,callback,'json');
 }
 
-$.tzGET = function(action,data,callback){
-	$.get('php/ajax.php?action='+action,data,callback,'json');
+jQuery.tzGET = function(action,data,callback){
+	jQuery.get('php/ajax.php?action='+action,data,callback,'json');
 }
 
 // A custom jQuery method for placeholder text:
 
-$.fn.defaultText = function(value){
+jQuery.fn.defaultText = function(value){
 	
 	var element = this.eq(0);
 	element.data('defaultText',value);

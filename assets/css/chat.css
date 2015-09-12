@@ -342,3 +342,7 @@ p.noChats,
 .inbox_text{
 	font-size: 1.3em;
 }
+.user_row{
+	cursor: pointer;
+	cursor: hand;
+}

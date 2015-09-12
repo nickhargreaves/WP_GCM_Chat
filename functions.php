@@ -106,6 +106,11 @@ function chat_action_javascript() { ?>
             jQuery("#inbox").show();
 
         });
+        jQuery(".user_row").click(function(){
+           //which user?
+          //  jQuery(".user_thumb").click();
+            alert("This is happening.");
+        });
         jQuery("#inbox-button").click(function(){
             jQuery("#chatBottomBar").hide();
             jQuery("#chatLineHolder").hide();
@@ -138,7 +143,7 @@ function chat_action_javascript() { ?>
             jQuery("#chatBottomBar").show();
             jQuery("#chatLineHolder").show();
             jQuery("#chatRecipient").show();
-            //hide notification
+            //update notification
         });
         jQuery('#submitChat').click(function() {
 

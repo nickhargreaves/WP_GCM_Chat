@@ -31,6 +31,8 @@ require(realpath(dirname(__FILE__)).'/../../../wp-blog-header.php');
                     );
                     $messages_recipient = get_posts($args);
 
+                
+
                     //Get where current user is author
                     $args = array(
                         'posts_per_page'   => 500000,
