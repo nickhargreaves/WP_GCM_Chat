@@ -24,6 +24,12 @@
 	left:40px;
 }
 
+#user_thumb{
+	left:9px;
+	position:absolute;
+	top:8px;
+}
+
 
 /* Chats */
 
@@ -116,7 +122,6 @@
 	border:1px solid #444444;
 	display:block;
 	visibility:hidden;
-
 }
 
 

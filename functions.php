@@ -106,10 +106,21 @@ function chat_action_javascript() { ?>
             jQuery("#inbox").show();
 
         });
-        jQuery(".user_row").click(function(){
+        jQuery(document).on("click", ".user_row", function(e){
            //which user?
-          //  jQuery(".user_thumb").click();
-            alert("This is happening.");
+          jQuery(".user_thumb").click();
+        });
+        jQuery(".inbox_button").click(function(){
+            jQuery("#chatBottomBar").hide();
+            jQuery("#chatLineHolder").hide();
+            jQuery("#chatRecipient").hide();
+            jQuery("#inbox").show();
+
+            //reload messages
+            jQuery.post("<?php print plugins_url( 'load_messages.php', __FILE__ );?>")
+                .done(function( data ) {
+                    jQuery("#inbox").html(data);
+                });
         });
         jQuery("#inbox-button").click(function(){
             jQuery("#chatBottomBar").hide();

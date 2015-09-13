@@ -1,7 +1,6 @@
 <?php
 require(realpath(dirname(__FILE__)).'/../../../wp-blog-header.php');
 ?>
-
 <table cellspacing="0">
                 <?php
                 /*
@@ -80,7 +79,7 @@ require(realpath(dirname(__FILE__)).'/../../../wp-blog-header.php');
                             }
                             if(!in_array($display_name, $displayed_users)){
                                 print '<tr class="user_row" title="'.$display_name.'"  gravatar="'.$display_gravatar.'"'.$display_name.'">
-                                <th scope="row"><img src="' . $display_gravatar . '"></th>
+                                <th scope="row"><img class="user_row" src="' . $display_gravatar . '"></th>
                                 <td><span class="inbox_name">' . $display_name . '</span></br>
                                 <span class="inbox_text">' . $message->post_title . '</span>
                                 </tr>';
