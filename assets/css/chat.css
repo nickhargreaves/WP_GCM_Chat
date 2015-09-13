@@ -24,12 +24,6 @@
 	left:40px;
 }
 
-#user_thumb{
-	left:9px;
-	position:absolute;
-	top:8px;
-}
-
 
 /* Chats */
 
@@ -115,12 +109,14 @@
 	height:32px;
 	margin:10px 0 0 10px;
 	width:32px;
+	cursor: pointer;
 }
 
 #chatUsers .user_thumb img{
 	border:1px solid #444444;
 	display:block;
 	visibility:hidden;
+
 }
 
 
@@ -308,6 +304,7 @@ p.noChats,
 	position:absolute;
 	right:10px;
 	top:7px;
+	cursor: pointer;
 }
 /**
 	Inbox
