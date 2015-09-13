@@ -94,6 +94,24 @@ add_action( 'admin_footer', 'chat_action_javascript' ); // Write our JS below he
 
 function chat_action_javascript() { ?>
     <script type="text/javascript" >
+        function load_user_chat(gravatar, username){
+            jQuery('#chatRecipient').html("<img src='" +gravatar+"'>" + username);
+            //show user chat history
+            jQuery.post("<?php print plugins_url( 'user_chat_history.php', __FILE__ );?>",
+                {
+                    username: username,
+                })
+                .done(function( data ) {
+                    jQuery("#chatLineHolder").html(data);
+                });
+
+            //show chat box
+            jQuery("#inbox").hide();
+            jQuery("#chatBottomBar").show();
+            jQuery("#chatLineHolder").show();
+            jQuery("#chatRecipient").show();
+            //update notification
+        }
         jQuery.post("<?php print plugins_url( 'load_messages.php', __FILE__ );?>")
             .done(function( data ) {
                 jQuery("#inbox").html(data);
@@ -107,8 +125,11 @@ function chat_action_javascript() { ?>
 
         });
         jQuery(document).on("click", ".user_row", function(e){
-           //which user?
-          jQuery(".user_thumb").click();
+
+            var gravatar = jQuery(this).attr('gravatar');
+            var username = jQuery(this).attr('title');
+
+            load_user_chat(gravatar, username);
         });
         jQuery(".inbox_button").click(function(){
             jQuery("#chatBottomBar").hide();
@@ -135,26 +156,10 @@ function chat_action_javascript() { ?>
                 });
         });
         jQuery(".user_thumb").click(function(){
-            //show user details
             var gravatar = jQuery(this).attr('gravatar');
             var username = jQuery(this).attr('title');
 
-            jQuery('#chatRecipient').html("<img src='" +gravatar+"'>" + username);
-            //show user chat history
-            jQuery.post("<?php print plugins_url( 'user_chat_history.php', __FILE__ );?>",
-                {
-                    username: username,
-                })
-                .done(function( data ) {
-                    jQuery("#chatLineHolder").html(data);
-                });
-
-            //show chat box
-            jQuery("#inbox").hide();
-            jQuery("#chatBottomBar").show();
-            jQuery("#chatLineHolder").show();
-            jQuery("#chatRecipient").show();
-            //update notification
+            load_user_chat(gravatar, username);
         });
         jQuery('#submitChat').click(function() {
 
