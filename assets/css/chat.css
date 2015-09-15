@@ -1,7 +1,7 @@
 /* Main chat container */
 
 #chatContainer{
-	width:100%;
+	width:420px;
 	position:relative;
 	min-height: 500px;
 }
@@ -36,7 +36,7 @@
 
 #chatLineHolder{
 	height:360px;
-	width:350px;
+	width:270px;
 	margin-bottom:20px;
 }
 
@@ -82,10 +82,10 @@
 }
 
 .chat .time{
-	position:absolute;
-	right:10px;
-	top:12px;
-	font-size:11px;
+	position: absolute;
+	right: 10px;
+	top: 0px;
+	font-size: 8px;
 }
 
 .chat .author{
@@ -211,7 +211,7 @@ a.logoutButton{
 	right:10px;
 	text-shadow:1px 1px 0 #888;
 	top:7px;
-	
+
 	-moz-box-shadow:0 0 7px #888 inset;
 	-webkit-box-shadow:0 0 7px #888 inset;
 	box-shadow:0 0 7px #888 inset;
@@ -219,7 +219,7 @@ a.logoutButton{
 
 a.logoutButton:hover{
 	text-shadow:1px 1px 0 #888;
-	
+
 	-moz-box-shadow:0 0 7px #666 inset;
 	-webkit-box-shadow:0 0 7px #666 inset;
 	box-shadow:0 0 7px #666 inset;
@@ -274,7 +274,7 @@ p.noChats,
 	padding:16px;
 	text-align:center;
 	color:#fff;
-	
+
 	text-shadow:1px 1px 0 #940f0f;
 }
 #chatRecipient{
@@ -317,7 +317,7 @@ p.noChats,
 #inbox{
 	margin-bottom:20px;
 	height:360px;
-	width:350px;
+	width:265px;
 }
 #inbox table{
 	width: 100%;
