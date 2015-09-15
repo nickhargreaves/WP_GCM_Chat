@@ -96,6 +96,7 @@ function chat_action_javascript() { ?>
     <script type="text/javascript" >
         function load_user_chat(gravatar, username){
             jQuery('#chatRecipient').html("<img src='" +gravatar+"'>" + username);
+            jQuery('#chatRecipient').attr("title", username);
             //show user chat history
             jQuery.post("<?php print plugins_url( 'user_chat_history.php', __FILE__ );?>",
                 {
@@ -179,7 +180,7 @@ function chat_action_javascript() { ?>
                 author      : jQuery("#chatForm").attr("author"),
                 author_id      : jQuery("#chatForm").attr("author_id"),
                 gravatar    : jQuery("#chatForm").attr("gravatar"),
-                recipient   : jQuery(".user_thumb").attr("title")
+                recipient   : jQuery("#chatRecipient").attr("title")
             };
 
         // add the chat
