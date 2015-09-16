@@ -117,6 +117,7 @@ function chat_action_javascript() { ?>
                         verticalDragMaxHeight: 12
                     }).data('jsp');
 
+                    chat.data.jspAPI.scrollToBottom(true);
 
                 });
 
