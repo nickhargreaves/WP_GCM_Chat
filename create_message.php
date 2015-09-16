@@ -14,4 +14,5 @@ $post_id = wp_insert_post(
 
 update_post_meta( $post_id, 'recipient', $_POST['recipient']);
 
+echo "blab";
 ?>

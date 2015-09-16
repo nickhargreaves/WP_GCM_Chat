@@ -62,7 +62,7 @@ require(realpath(dirname(__FILE__)).'/../../../wp-blog-header.php');
                     {
                         $arr[$key] = $row->ID;
                     }
-                    array_multisort($arr, SORT_DESC, $messages);
+                    array_multisort($arr, SORT_ASC, $messages);
 
                     //add to array by id, user and ignore if already added
                     $displayed_messages = array();
@@ -75,7 +75,6 @@ require(realpath(dirname(__FILE__)).'/../../../wp-blog-header.php');
 
                             $display_gravatar = get_gravatar_url($author->user_email);
                             $display_name = $author->nickname;
-
 
                                 print '<div class="chat chat-'.$message->ID.' rounded">
                                     <span class="gravatar"><img src="'.$display_gravatar.'" width="23" height="23" onload="this.style.visibility=\'visible\'" /></span>

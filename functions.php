@@ -247,13 +247,14 @@ function chat_action_javascript() { ?>
             chat.data.jspAPI.scrollToBottom(true);
 
             //send chat to user
+            /*
             jQuery.post("<?php print plugins_url( 'create_message.php', __FILE__ );?>",
                 {
                     author: params.author_id,
                     message: params.text,
                     recipient: params.recipient
                 });
-
+*/
         });
 
 
