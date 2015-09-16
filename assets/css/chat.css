@@ -311,10 +311,11 @@ p.noChats,
 /**
 	Inbox
 	*/
-#inbox{
-	margin-bottom:20px;
-	height:360px;
-	width:265px;
+#inbox {
+	margin-bottom: 20px;
+	max-height: 450px;
+	width: 265px;
+	overflow-y: scroll;
 }
 #inbox table{
 	width: 100%;

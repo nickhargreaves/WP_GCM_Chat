@@ -30,7 +30,9 @@ function wp_gcm_chat_dashboard_widget_function() {
 				<span class="name"><?php echo $current_user->user_nicename;?></span><img id="inbox-button" src="<?php echo plugins_url( 'assets/img/inbox.png', __FILE__ );?>"></span>
         </div>
         <div id="chatRecipient"></div>
-        <div id="chatLineHolder"></div>
+        <div id="chatLineHolderContainer">
+            <div id="chatLineHolder"></div>
+        </div>
         <div id="inbox">
         </div>
 

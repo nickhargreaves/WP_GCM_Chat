@@ -103,7 +103,21 @@ function chat_action_javascript() { ?>
                     username: username,
                 })
                 .done(function( data ) {
+
+                    jQuery("#chatLineHolderContainer").html('<div id="chatLineHolder"></div>');
+
                     jQuery("#chatLineHolder").html(data);
+
+                    chat.data.lastID = 0;
+
+                    chat.data.noActivity = 0;
+
+                    chat.data.jspAPI = jQuery('#chatLineHolder').jScrollPane({
+                        verticalDragMinHeight: 12,
+                        verticalDragMaxHeight: 12
+                    }).data('jsp');
+
+
                 });
 
             //show chat box
@@ -162,7 +176,19 @@ function chat_action_javascript() { ?>
 
             load_user_chat(gravatar, username);
         });
-        jQuery('#submitChat').click(function() {
+
+        var chat = {
+
+            // data holds variables for use in the class:
+
+            data: {
+                lastID: 0,
+                noActivity: 0,
+                jspAPi: null
+            }
+        };
+        jQuery('#submitChat').click(function () {
+
 
             var text = jQuery('#chatText').val();
 
@@ -172,58 +198,46 @@ function chat_action_javascript() { ?>
 
             jQuery('#chatText').val("");
 
-        // Assigning a temporary ID to the chat:
-        var tempID = 't'+Math.round(Math.random()*1000000),
-            params = {
-                id			: tempID,
-                text		: text.replace(/</g,'&lt;').replace(/>/g,'&gt;'),
-                author      : jQuery("#chatForm").attr("author"),
-                author_id      : jQuery("#chatForm").attr("author_id"),
-                gravatar    : jQuery("#chatForm").attr("gravatar"),
-                recipient   : jQuery("#chatRecipient").attr("title")
-            };
+            // Assigning a temporary ID to the chat:
+            var tempID = 't' + Math.round(Math.random() * 1000000),
+                params = {
+                    id: tempID,
+                    text: text.replace(/</g, '&lt;').replace(/>/g, '&gt;'),
+                    author: jQuery("#chatForm").attr("author"),
+                    author_id: jQuery("#chatForm").attr("author_id"),
+                    gravatar: jQuery("#chatForm").attr("gravatar"),
+                    recipient: jQuery("#chatRecipient").attr("title")
+                };
 
-        // add the chat
-        // to the screen immediately, without waiting for
-        // the AJAX request to complete:
-        // All times are displayed in the user's timezone
+            // add the chat
+            // to the screen immediately, without waiting for
+            // the AJAX request to complete:
+            // All times are displayed in the user's timezone
 
             var d = new Date();
-            if(params.time) {
+            if (params.time) {
 
                 // PHP returns the time in UTC (GMT). We use it to feed the date
                 // object and later output it in the user's timezone. JavaScript
                 // internally converts it for us.
 
-                d.setUTCHours(params.time.hours,params.time.minutes);
+                d.setUTCHours(params.time.hours, params.time.minutes);
             }
 
-            params.time = (d.getHours() < 10 ? '0' : '' ) + d.getHours()+':'+
-                (d.getMinutes() < 10 ? '0':'') + d.getMinutes();
+            params.time = (d.getHours() < 10 ? '0' : '' ) + d.getHours() + ':' +
+                (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
 
             //var markup = chat.render('chatLine',params),
-            var markup = '<div class="chat chat-' + params.id + ' rounded">' + '<span class="gravatar"><img src="'+params.gravatar+'" width="23" height="23" onload="this.style.visibility=\'visible\'" /></span><span class="author">' + params.author + ':</span><span class="text">' + params.text + '</span><span class="time">' + params.time + '</span></div>';
+            var markup = '<div class="chat chat-' + params.id + ' rounded">' + '<span class="gravatar"><img src="' + params.gravatar + '" width="23" height="23" onload="this.style.visibility=\'visible\'" /></span><span class="author">' + params.author + ':</span><span class="text">' + params.text + '</span><span class="time">' + params.time + '</span></div>';
 
-            var exists = jQuery('#chatLineHolder .chat-'+params.id);
+            var exists = jQuery('#chatLineHolder .chat-' + params.id);
 
-            if(exists.length){
+            if (exists.length) {
                 exists.remove();
             }
-            var chat = {
 
-                // data holds variables for use in the class:
 
-                data: {
-                    lastID: 0,
-                    noActivity: 0
-                }
-            }
-            chat.data.jspAPI = jQuery('#chatLineHolder').jScrollPane({
-                verticalDragMinHeight: 12,
-                verticalDragMaxHeight: 12
-            }).data('jsp');
-
-            if(!chat.data.lastID){
+            if (!chat.data.lastID) {
                 // If this is the first chat, remove the
                 // paragraph saying there aren't any:
 
@@ -231,14 +245,17 @@ function chat_action_javascript() { ?>
             }
 
             // If this isn't a temporary chat:
-            if(params.id.toString().charAt(0) != 't'){
-                var previous = jQuery('#chatLineHolder .chat-'+(+params.id - 1));
-                if(previous.length){
+            if (params.id.toString().charAt(0) != 't') {
+                 var previous = jQuery('#chatLineHolder .chat-' + (+params.id - 1));
+
+                if (previous.length) {
                     previous.after(markup);
-                }
-                else chat.data.jspAPI.getContentPane().append(markup);
+                 }else{
+                     chat.data.jspAPI.getContentPane().append(markup);
+                 }
+             }else{
+                chat.data.jspAPI.getContentPane().append(markup);
             }
-            else chat.data.jspAPI.getContentPane().append(markup);
 
             // As we added new content, we need to
             // reinitialise the jScrollPane plugin:
@@ -247,14 +264,13 @@ function chat_action_javascript() { ?>
             chat.data.jspAPI.scrollToBottom(true);
 
             //send chat to user
-            /*
             jQuery.post("<?php print plugins_url( 'create_message.php', __FILE__ );?>",
                 {
                     author: params.author_id,
                     message: params.text,
                     recipient: params.recipient
                 });
-*/
+
         });
 
 
