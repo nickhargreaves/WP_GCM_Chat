@@ -101,41 +101,6 @@ var chat = {
 			return false;
 		});
 
-		// Logging the user out:
-
-		jQuery('a.logoutButton').live('click',function(){
-
-			jQuery('#chatTopBar > span').fadeOut(function(){
-				jQuery(this).remove();
-			});
-
-			jQuery('#submitForm').fadeOut(function(){
-				jQuery('#loginForm').fadeIn();
-			});
-
-			jQuery.tzPOST('logout');
-
-			return false;
-		});
-
-		// Checking whether the user is already logged (browser refresh)
-
-		jQuery.tzGET('checkLogged',function(r){
-			if(r.logged){
-				chat.login(r.loggedAs.name,r.loggedAs.gravatar);
-			}
-		});
-
-		// Self executing timeout functions
-
-		(function getChatsTimeoutFunction(){
-			chat.getChats(getChatsTimeoutFunction);
-		})();
-
-		(function getUsersTimeoutFunction(){
-			chat.getUsers(getUsersTimeoutFunction);
-		})();
-
 	},
 
 	// The login method hides displays the
