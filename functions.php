@@ -192,6 +192,13 @@ function chat_action_javascript() { ?>
                 jspAPi: null
             }
         };
+
+        $('#chatText').keypress(function (e) {
+            if (e.which == 13) {
+                jQuery('#submitChat').click();
+                return false;    //<---- Add this line
+            }
+        });
         jQuery('#submitChat').click(function () {
 
 

@@ -157,7 +157,7 @@ Show chat box by default
 */
 input#chatText{
 	/* The chat submit text field */
-	width:385px;
+	width:100%;
 }
 
 
@@ -217,10 +217,9 @@ a.logoutButton:hover{
 }
 
 #chatContainer .blueButton{
-	background:url('../img/button_blue.png') no-repeat;
 	border:none !important;
 	color:#516D7F !important;
-	display:inline-block;
+	display:none;
 	font-size:13px;
 	height:29px;
 	text-align:center;
