@@ -173,8 +173,9 @@ function chat_action_javascript() { ?>
         jQuery(".user_thumb").click(function(){
             var gravatar = jQuery(this).attr('gravatar');
             var username = jQuery(this).attr('title');
-
+            jQuery( "#users_dialog" ).dialog("close");
             load_user_chat(gravatar, username);
+
         });
 
         //show users dialog
@@ -196,7 +197,7 @@ function chat_action_javascript() { ?>
         $('#chatText').keypress(function (e) {
             if (e.which == 13) {
                 jQuery('#submitChat').click();
-                return false;    //<---- Add this line
+                return false;
             }
         });
         jQuery('#submitChat').click(function () {
