@@ -177,6 +177,11 @@ function chat_action_javascript() { ?>
             load_user_chat(gravatar, username);
         });
 
+        //show users dialog
+        jQuery("#users-button").click(function(){
+            jQuery( "#users_dialog" ).dialog();
+        });
+
         var chat = {
 
             // data holds variables for use in the class:
