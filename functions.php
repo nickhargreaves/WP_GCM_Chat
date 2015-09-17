@@ -127,8 +127,8 @@ function get_user_messages($user_id){
         'post_status'      => 'draft',
         'suppress_filters' => true
     );
-    $messages = get_posts($args);
 
+    $messages = get_posts($args);
 
     $displayed_messages = array();
 
@@ -139,13 +139,13 @@ function get_user_messages($user_id){
          * Check if current user is author or recipient
          */
 
-            $message_author = get_post_meta($message->ID, 'author', true);
-            $message_recipient = get_post_meta($message->ID, 'recipient', true);
+        $message_author = get_post_meta($message->ID, 'author', true);
+        $message_recipient = get_post_meta($message->ID, 'recipient', true);
 
-            if(($user_id == $message_recipient)||($message_author == $user_id)) {
-                //add to messages
-                $displayed_messages[] = $message;
-            }
+        if(($user_id == $message_recipient)||($message_author == $user_id)) {
+            //add to messages
+            $displayed_messages[] = $message;
+        }
 
         return $displayed_messages;
 
