@@ -109,7 +109,7 @@ function send_push_notification($registration_ids, $message) {
  * @return user's messages
  */
 
-function get_user_messages($user_id){
+function get_user_messages($user_id, $author = null){
 
     //Get messages where current user is recipient
     $args = array(
@@ -143,8 +143,15 @@ function get_user_messages($user_id){
         $message_recipient = get_post_meta($message->ID, 'recipient', true);
 
         if(($user_id == $message_recipient)||($message_author == $user_id)) {
-            //add to messages
-            $displayed_messages[] = $message;
+            if($author == null){
+                //add to messages
+                $displayed_messages[] = $message;
+            }else{
+                if($message_author == $author){
+                    //add to messages
+                    $displayed_messages[] = $message;
+                }
+            }
         }
 
     }
@@ -302,9 +309,10 @@ function chat_action_javascript() { ?>
         function checkNewMessages() {
             var recipient = jQuery('#chatRecipient').attr("user_id");
             var author = jQuery("#chatForm").attr("author_id");
+            var last_message = jQuery("#chatForm").attr("last_message");
 
             jQuery.ajax({
-                    url: "<?php print plugins_url( 'check_new.php', __FILE__ );?>" + "?author=" + author + "&recipient=" + recipient,
+                    url: "<?php print plugins_url( 'check_new.php', __FILE__ );?>" + "?author=" + author + "&recipient=" + recipient + "&last_message=" + last_message,
                 success: function(data) {
                     alert(data);
                     //jQuery("#chatLineHolder").html(data);

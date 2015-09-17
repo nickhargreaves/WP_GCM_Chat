@@ -4,6 +4,7 @@ require(realpath(dirname(__FILE__)).'/../../../wp-blog-header.php');
 
 <table cellspacing="0">
                 <?php
+
                 /*
                  * show latest messages
                  */
@@ -18,6 +19,9 @@ require(realpath(dirname(__FILE__)).'/../../../wp-blog-header.php');
                 $messages = array_reverse($messages);
 
                 $displayed_messages = 0;
+
+                //track last message from other user
+                $last_message = 0;
                 foreach($messages as $message){
 
                     /*
@@ -35,7 +39,7 @@ require(realpath(dirname(__FILE__)).'/../../../wp-blog-header.php');
                             $author = get_userdata($message->post_author);
 
                             $display_gravatar = get_gravatar_url($author->user_email);
-                            $display_name = $author->nickname;
+                            $display_name = $author->user_login;
 
                             print '<div class="chat chat-'.$message->ID.' rounded">
                             <span class="gravatar"><img src="'.$display_gravatar.'" width="23" height="23" onload="this.style.visibility=\'visible\'" /></span>
@@ -43,6 +47,10 @@ require(realpath(dirname(__FILE__)).'/../../../wp-blog-header.php');
                             <span class="time">'.$message->post_date.'</span></div>';
 
                             $displayed_messages++;
+
+
+                            if($current_user->ID != $message_author)
+                                $last_message = $message->ID;
                         }
 
                     }else{
@@ -52,9 +60,6 @@ require(realpath(dirname(__FILE__)).'/../../../wp-blog-header.php');
 
                 }
 
-
-                foreach($displayed_messages as $message){
-
-                }
+                print "<script>jQuery('#chatForm').attr('last_message', '".$last_message."');</script>";
                 ?>
 </table>
