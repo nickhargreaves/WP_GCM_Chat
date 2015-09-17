@@ -14,6 +14,9 @@ require(realpath(dirname(__FILE__)).'/../../../wp-blog-header.php');
                 //get all current user messages
                 $messages = get_user_messages($current_user->ID);
 
+                //reverse order to show latest at the bottom
+                $messages = array_reverse($messages);
+
                 $displayed_messages = 0;
                 foreach($messages as $message){
 

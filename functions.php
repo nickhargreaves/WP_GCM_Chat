@@ -150,8 +150,6 @@ function get_user_messages($user_id){
     }
 
     return $displayed_messages;
-
-
 }
 
 /*
