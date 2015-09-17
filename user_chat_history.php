@@ -7,84 +7,63 @@ require(realpath(dirname(__FILE__)).'/../../../wp-blog-header.php');
                 /*
                  * show latest messages
                  */
-                    //Get where current user is recipient
-                $user = $_POST['username'];
+                $user_id = $_POST['user_id'];
                 
                 $current_user = wp_get_current_user();
-                    $args = array(
-                        'posts_per_page'   => 500000,
-                        'offset'           => 0,
-                        'category'         => '',
-                        'category_name'    => '',
-                        'orderby'          => 'date',
-                        'order'            => 'DESC',
-                        'include'          => '',
-                        'exclude'          => '',
-                        'meta_key'         => 'recipient',
-                        'meta_value'       => $current_user->user_nicename,
-                        'post_type'        => 'message',
-                        'post_mime_type'   => '',
-                        'post_parent'      => '',
-                        'author'	   => $user,
-                        'post_status'      => 'draft',
-                        'suppress_filters' => true
-                    );
-                    $messages_recipient = get_posts($args);
 
-                
+                //Get messages where current user is recipient
+                $args = array(
+                    'posts_per_page'   => 500000,
+                    'offset'           => 0,
+                    'category'         => '',
+                    'category_name'    => '',
+                    'orderby'          => 'date',
+                    'order'            => 'DESC',
+                    'include'          => '',
+                    'exclude'          => '',
+                    'post_type'        => 'message',
+                    'post_mime_type'   => '',
+                    'post_parent'      => '',
+                    'post_status'      => 'draft',
+                    'suppress_filters' => true
+                );
+                $messages = get_posts($args);
 
-                    //Get where current user is author
-                    $args = array(
-                        'posts_per_page'   => 500000,
-                        'offset'           => 0,
-                        'category'         => '',
-                        'category_name'    => '',
-                        'orderby'          => 'date',
-                        'order'            => 'DESC',
-                        'include'          => '',
-                        'exclude'          => '',
-                        'meta_key'         => 'recipient',
-                        'meta_value'       => $user,
-                        'post_type'        => 'message',
-                        'post_mime_type'   => '',
-                        'post_parent'      => '',
-                        'author'	   => $current_user->user_nicename,
-                        'post_status'      => 'draft',
-                        'suppress_filters' => true
-                    );
-                    $messages_author = get_posts($args);
+                $displayed_messages = array();
+                foreach($messages as $message){
 
-                    //now combine both
-                    $messages = array_merge($messages_recipient, $messages_author);
-                    //sort by latest
-                    $arr = array();
-                    foreach ($messages as $key => $row)
-                    {
-                        $arr[$key] = $row->ID;
+                    /*
+                     * Loop through messages
+                     * Check if current user is author or recipient
+                     * Check if requested user is author or recipient
+                     */
+
+                    if(count($displayed_messages) < 25) {
+                        $message_author = get_post_meta($message->ID, 'author', true);
+                        $message_recipient = get_post_meta($message->ID, 'recipient', true);
+                        if(($message_author == $current_user->ID && $message_recipient == $user_id)||($message_author == $user_id && $message_recipient == $current_user->ID))
+
+                            //show message
+                            $displayed_messages[] = $message;
+
+                    }else{
+                        //we don't want to go through all messages
+                        break;
                     }
-                    array_multisort($arr, SORT_ASC, $messages);
 
-                    //add to array by id, user and ignore if already added
-                    $displayed_messages = array();
+                }
 
-                    foreach($messages as $message){
 
-                        //check if id and user not already added
-                        if(!in_array($message->ID, $displayed_messages)) {
-                            $author = get_userdata($message->post_author);
+                foreach($displayed_messages as $message){
+                    $author = get_userdata($message->post_author);
 
-                            $display_gravatar = get_gravatar_url($author->user_email);
-                            $display_name = $author->nickname;
+                    $display_gravatar = get_gravatar_url($author->user_email);
+                    $display_name = $author->nickname;
 
-                                print '<div class="chat chat-'.$message->ID.' rounded">
-                                    <span class="gravatar"><img src="'.$display_gravatar.'" width="23" height="23" onload="this.style.visibility=\'visible\'" /></span>
-                                    <span class="author">'.$display_name.':</span><span class="text">' . $message->post_title .'</span>
-                                    <span class="time">'.$message->post_date.'</span></div>';
-
-                                //add this to array of displayed messages
-                                $displayed_messages[] = $message->ID;
-
-                        }
-                    }
+                        print '<div class="chat chat-'.$message->ID.' rounded">
+                            <span class="gravatar"><img src="'.$display_gravatar.'" width="23" height="23" onload="this.style.visibility=\'visible\'" /></span>
+                            <span class="author">'.$display_name.':</span><span class="text">' . $message->post_title .'</span>
+                            <span class="time">'.$message->post_date.'</span></div>';
+                }
                 ?>
 </table>

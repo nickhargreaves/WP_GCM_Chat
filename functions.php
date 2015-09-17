@@ -34,6 +34,32 @@ function users_gcm_ids($user_id=null){
  * Send GCM Message
  * TODO: create new post 'message'
  */
+
+function send_message($username, $message, $recipient){
+
+    $post_id = wp_insert_post(
+        array(
+            'comment_status' => 'closed',
+            'ping_status' => 'closed',
+            'post_author' => $username,
+            'post_title' => $message,
+            'post_status' => 'draft',
+            'post_type' => 'message'
+        )
+    );
+
+    update_post_meta( $post_id, 'recipient', $recipient);
+    update_post_meta( $post_id, 'author', $username);
+
+
+    //send gcm notification
+    $user = get_user_by('login', $username);
+    $user_id = $user->ID;
+
+    $reg_id = users_gcm_ids($user_id);
+    send_push_notification($reg_id, $message);
+}
+
 function send_push_notification($registration_ids, $message) {
 
 
@@ -76,6 +102,57 @@ function send_push_notification($registration_ids, $message) {
     // Close connection
     curl_close($ch);
 }
+
+/*
+ * Get specified user's messages
+ * @param the user id
+ * @return user's messages
+ */
+
+function get_user_messages($user_id){
+
+    //Get messages where current user is recipient
+    $args = array(
+        'posts_per_page'   => 500000,
+        'offset'           => 0,
+        'category'         => '',
+        'category_name'    => '',
+        'orderby'          => 'date',
+        'order'            => 'DESC',
+        'include'          => '',
+        'exclude'          => '',
+        'post_type'        => 'message',
+        'post_mime_type'   => '',
+        'post_parent'      => '',
+        'post_status'      => 'draft',
+        'suppress_filters' => true
+    );
+    $messages = get_posts($args);
+
+
+    $displayed_messages = array();
+    
+    foreach($messages as $message){
+
+        /*
+         * Loop through messages
+         * Check if current user is author or recipient
+         */
+
+            $message_author = get_post_meta($message->ID, 'author', true);
+            $message_recipient = get_post_meta($message->ID, 'recipient', true);
+
+            if(($user_id == $message_recipient)||($message_author == $user_id)) {
+                //add to messages
+                $displayed_messages[] = $message;
+            }
+
+        return $displayed_messages;
+
+    }
+
+}
+
 /*
  * Get user gravatars for notifications
  */
@@ -94,13 +171,16 @@ add_action( 'admin_footer', 'chat_action_javascript' ); // Write our JS below he
 
 function chat_action_javascript() { ?>
     <script type="text/javascript" >
-        function load_user_chat(gravatar, username){
+        function load_user_chat(gravatar, username, user_id){
             jQuery('#chatRecipient').html("<img src='" +gravatar+"'>" + username);
             jQuery('#chatRecipient').attr("title", username);
+            jQuery('#chatRecipient').attr("user_id", user_id);
+
             //show user chat history
             jQuery.post("<?php print plugins_url( 'user_chat_history.php', __FILE__ );?>",
                 {
                     username: username,
+                    user_id: user_id
                 })
                 .done(function( data ) {
 
@@ -144,8 +224,9 @@ function chat_action_javascript() { ?>
 
             var gravatar = jQuery(this).attr('gravatar');
             var username = jQuery(this).attr('title');
+            var user_id = jQuery(this).attr('user_id');
 
-            load_user_chat(gravatar, username);
+            load_user_chat(gravatar, username, user_id);
         });
         jQuery(".inbox_button").click(function(){
             jQuery("#chatBottomBar").hide();
@@ -174,8 +255,9 @@ function chat_action_javascript() { ?>
         jQuery(".user_thumb").click(function(){
             var gravatar = jQuery(this).attr('gravatar');
             var username = jQuery(this).attr('title');
+            var user_id = jQuery(this).attr('user_id');
             jQuery( "#users_dialog" ).dialog("close");
-            load_user_chat(gravatar, username);
+            load_user_chat(gravatar, username, user_id);
 
         });
 
@@ -220,7 +302,7 @@ function chat_action_javascript() { ?>
                     author: jQuery("#chatForm").attr("author"),
                     author_id: jQuery("#chatForm").attr("author_id"),
                     gravatar: jQuery("#chatForm").attr("gravatar"),
-                    recipient: jQuery("#chatRecipient").attr("title")
+                    recipient: jQuery("#chatRecipient").attr("user_id")
                 };
 
             // add the chat

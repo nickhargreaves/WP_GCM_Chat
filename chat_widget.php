@@ -41,11 +41,12 @@ function wp_gcm_chat_dashboard_widget_function() {
 
                     <div id="chatUsers" class="rounded">
                         <?php
-                        $blog_users = get_users( 'blog_id=1&orderby=nicename' );
-                        foreach($blog_users as $user){
-                            if($user->user_nicename != $current_user->user_nicename)
-                                print '<div class="user_thumb" title="'.$user->user_nicename.'" gravatar="'.get_gravatar_url($user->user_email).'"><img src="'.get_gravatar_url($user->user_email).'" width="30" height="30" onload="this.style.visibility=\'visible\'" /></div>';
-                        }
+                            $blog_users = get_users( 'blog_id=1&orderby=nicename' );
+
+                            foreach($blog_users as $user){
+                                if($user->user_nicename != $current_user->user_nicename)
+                                    print '<div class="user_thumb" user_id="'.$user->ID.'" title="'.$user->user_nicename.'" gravatar="'.get_gravatar_url($user->user_email).'"><img src="'.get_gravatar_url($user->user_email).'" width="30" height="30" onload="this.style.visibility=\'visible\'" /></div>';
+                            }
                         ?>
                         <p class="count"><a href="<?php print get_admin_url();?>/users.php"><?php print count($blog_users)-1; ?> Total Users</a></p>
                     </div>
@@ -57,21 +58,17 @@ function wp_gcm_chat_dashboard_widget_function() {
         </div>
 
 
-        <table width="100%">
-            <tr>
-                <td>
+
                     <div id="chatRecipient"></div>
 
                     <div id="chatLineHolderContainer">
                         <div id="chatLineHolder"></div>
                     </div>
-                </td>
-                <td>
+
                     <div id="inbox">
+
                     </div>
-                </td>
-            </tr>
-        </table>
+
 
         <div id="chatBottomBar" class="rounded">
             <div class="tip"></div>
