@@ -170,6 +170,9 @@ add_action( 'admin_footer', 'chat_action_javascript' ); // Write our JS below he
 
 function chat_action_javascript() { ?>
     <script type="text/javascript" >
+
+        var checkNewMessagesTimeout;
+
         function load_user_chat(gravatar, username, user_id){
             jQuery('#chatRecipient').html("<img src='" +gravatar+"'>" + username);
             jQuery('#chatRecipient').attr("title", username);
@@ -197,6 +200,9 @@ function chat_action_javascript() { ?>
                     }).data('jsp');
 
                     chat.data.jspAPI.scrollToBottom(true);
+
+                    // schedule the first invocation to keep checking for new messages
+                    checkNewMessagesTimeout = setTimeout(checkNewMessages, 5000);
 
                 });
 
@@ -228,6 +234,7 @@ function chat_action_javascript() { ?>
             load_user_chat(gravatar, username, user_id);
         });
         jQuery(".inbox_button").click(function(){
+
             jQuery("#chatBottomBar").hide();
             jQuery("#chatLineHolder").hide();
             jQuery("#chatRecipient").hide();
@@ -240,6 +247,10 @@ function chat_action_javascript() { ?>
                 });
         });
         jQuery("#inbox-button").click(function(){
+
+            //Stop refreshing chat when user toggles to inbox
+            clearTimeout(checkNewMessagesTimeout);
+
             jQuery("#chatBottomBar").hide();
             jQuery("#chatLineHolder").hide();
             jQuery("#chatRecipient").hide();
@@ -282,6 +293,30 @@ function chat_action_javascript() { ?>
                 return false;
             }
         });
+        //periodic function to load new chats for recipient from user
+        /**
+         * periodic function to load new chats for recipient from specific user
+         * @param: author, user_id
+         */
+
+        function checkNewMessages() {
+            var recipient = jQuery('#chatRecipient').attr("user_id");
+            var author = jQuery("#chatForm").attr("author_id");
+
+            jQuery.ajax({
+                    url: "<?php print plugins_url( 'check_new.php', __FILE__ );?>" + "?author=" + author + "&recipient=" + recipient,
+                success: function(data) {
+                    alert(data);
+                    //jQuery("#chatLineHolder").html(data);
+            },
+            complete: function() {
+                // schedule the next request *only* when the current one is complete:
+                checkNewMessagesTimeout = setTimeout(checkNewMessages, 5000);
+            }
+        });
+        }
+
+        //on submit chat
         jQuery('#submitChat').click(function () {
 
 
