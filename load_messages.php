@@ -15,6 +15,8 @@ require(realpath(dirname(__FILE__)).'/../../../wp-blog-header.php');
                     //add to users array and ignore if already added
                     $displayed_users = array();
 
+
+
                     foreach($messages as $message){
 
                         $message_author = get_post_meta($message->ID, 'author', true);

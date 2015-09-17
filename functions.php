@@ -147,9 +147,10 @@ function get_user_messages($user_id){
             $displayed_messages[] = $message;
         }
 
-        return $displayed_messages;
-
     }
+
+    return $displayed_messages;
+
 
 }
 
