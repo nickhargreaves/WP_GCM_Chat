@@ -113,7 +113,7 @@ function get_user_messages($user_id){
 
     //Get messages where current user is recipient
     $args = array(
-        'posts_per_page'   => 500000,
+        'numberposts'      => -1,
         'offset'           => 0,
         'category'         => '',
         'category_name'    => '',
@@ -131,7 +131,7 @@ function get_user_messages($user_id){
 
 
     $displayed_messages = array();
-    
+
     foreach($messages as $message){
 
         /*
