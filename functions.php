@@ -313,9 +313,25 @@ function chat_action_javascript() { ?>
 
             jQuery.ajax({
                     url: "<?php print plugins_url( 'check_new.php', __FILE__ );?>" + "?author=" + author + "&recipient=" + recipient + "&last_message=" + last_message,
+                    dataType: "json",
                 success: function(data) {
-                    alert(data);
-                    //jQuery("#chatLineHolder").html(data);
+
+                    var new_messages = data['messages'];
+                    var new_last_message_id = data['new_last_message_id'];
+
+                    if(new_messages.length > 0){
+                        for(var i=0; i<new_messages.length; i++){
+                            //loop through result and append html
+                            chat.data.jspAPI.getContentPane().append(new_messages);
+                            //and scroll to bottom
+                            chat.data.jspAPI.reinitialise();
+                            chat.data.jspAPI.scrollToBottom(true);
+                        }
+
+                        //update last message
+                        jQuery('#chatForm').attr('last_message', new_last_message_id);
+                    }
+
             },
             complete: function() {
                 // schedule the next request *only* when the current one is complete:
