@@ -35,13 +35,13 @@ function users_gcm_ids($user_id=null){
  * TODO: create new post 'message'
  */
 
-function send_message($username, $message, $recipient){
+function send_message($user_id, $message, $recipient){
 
     $post_id = wp_insert_post(
         array(
             'comment_status' => 'closed',
             'ping_status' => 'closed',
-            'post_author' => $username,
+            'post_author' => $user_id,
             'post_title' => $message,
             'post_status' => 'draft',
             'post_type' => 'message'
@@ -49,13 +49,10 @@ function send_message($username, $message, $recipient){
     );
 
     update_post_meta( $post_id, 'recipient', $recipient);
-    update_post_meta( $post_id, 'author', $username);
+    update_post_meta( $post_id, 'author', $user_id);
 
 
     //send gcm notification
-    $user = get_user_by('login', $username);
-    $user_id = $user->ID;
-
     $reg_id = users_gcm_ids($user_id);
     send_push_notification($reg_id, $message);
 }
@@ -131,6 +128,7 @@ function get_user_messages($user_id, $author = null){
     $messages = get_posts($args);
 
     $displayed_messages = array();
+
 
     foreach($messages as $message){
 
@@ -421,6 +419,7 @@ function chat_action_javascript() { ?>
             jQuery.post("<?php print plugins_url( 'create_message.php', __FILE__ );?>",
                 {
                     author: params.author_id,
+                    username: params.author,
                     message: params.text,
                     recipient: params.recipient
                 });
