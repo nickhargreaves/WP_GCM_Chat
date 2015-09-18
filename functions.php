@@ -57,9 +57,9 @@ function send_message($user_id, $message, $recipient){
 
     $gcm = array("chat" => $message, "user"=>$user->user_login);
 
-    $reg_id = users_gcm_ids(array($recipient));
+    $reg_id = users_gcm_ids($recipient);
 
-    send_push_notification($reg_id, $gcm);
+    send_push_notification($reg_id, $gcm);;
 }
 
 function send_push_notification($registration_ids, $message) {
