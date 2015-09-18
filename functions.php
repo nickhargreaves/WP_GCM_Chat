@@ -53,8 +53,13 @@ function send_message($user_id, $message, $recipient){
 
 
     //send gcm notification
-    $reg_id = users_gcm_ids($user_id);
-    send_push_notification($reg_id, $message);
+    $user = get_user_by('id', $user_id);
+
+    $gcm = array("chat" => $message, "user"=>$user->user_login);
+
+    $reg_id = users_gcm_ids(array($recipient));
+
+    send_push_notification($reg_id, $gcm);
 }
 
 function send_push_notification($registration_ids, $message) {
@@ -95,6 +100,8 @@ function send_push_notification($registration_ids, $message) {
     if ($result === FALSE) {
         die('Curl failed: ' . curl_error($ch));
     }
+
+    print_r($result);
 
     // Close connection
     curl_close($ch);

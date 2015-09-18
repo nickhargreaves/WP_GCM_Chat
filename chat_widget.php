@@ -57,8 +57,6 @@ function wp_gcm_chat_dashboard_widget_function() {
             </span>
         </div>
 
-
-
                     <div id="chatRecipient"></div>
 
                     <div id="chatLineHolderContainer">
