@@ -62,6 +62,8 @@ function send_message($user_id, $message, $recipient){
     send_push_notification($reg_id, $gcm);;
 }
 
+
+
 function send_push_notification($registration_ids, $message) {
 
 

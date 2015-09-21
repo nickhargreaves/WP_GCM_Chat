@@ -49,3 +49,9 @@ require(realpath(dirname(__FILE__)).'/../../../wp-blog-header.php');
                     }
                 ?>
 </table>
+
+<?php
+    if(count($displayed_users)<1){
+        print "<h3>No Messages</h3>";
+    }
+?>
