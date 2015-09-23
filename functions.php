@@ -103,8 +103,6 @@ function send_push_notification($registration_ids, $message) {
         die('Curl failed: ' . curl_error($ch));
     }
 
-    print_r($result);
-
     // Close connection
     curl_close($ch);
 }
