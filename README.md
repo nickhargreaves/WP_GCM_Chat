@@ -1,7 +1,7 @@
 # WP_GCM_Chat
 A GCM based messaging & notifications plugin for WordPress for the interaction between users. This can is meant to enable chat between GCM enabled devices and dashboard.
 
-# Installation
+## Installation
 
 1. Download the plugin to your wp-content/plugins folder
 
@@ -24,3 +24,15 @@ A GCM based messaging & notifications plugin for WordPress for the interaction b
 You are now ready to start using your Wordpress dashboard for chat between users or with a GCM enabled app.
 
 Note: The app must have the project ID configured to the project ID you got from step 3 above.
+
+## Integration
+
+Applying notifications in your other plugins is super easy. Simply use it as follows:
+
+
+```
+$reg_ids = array("user_id1", "user_id2");
+$message = array("key" => "value");
+
+send_push_notification($reg_ids, $message);
+```
