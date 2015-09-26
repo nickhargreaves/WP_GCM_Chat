@@ -107,7 +107,7 @@ function send_push_notification($registration_ids, $message) {
     curl_close($ch);
 }
 
-/*
+/**
  * Get specified user's messages
  * @param the user id
  * @return user's messages
@@ -191,7 +191,7 @@ function chat_action_javascript() { ?>
             jQuery('#chatRecipient').attr("user_id", user_id);
 
             //show user chat history
-            jQuery.post("<?php print plugins_url( 'user_chat_history.php', __FILE__ );?>",
+            jQuery.post("<?php print plugins_url( 'includes/user_chat_history.php', __FILE__ );?>",
                 {
                     username: username,
                     user_id: user_id
@@ -225,7 +225,7 @@ function chat_action_javascript() { ?>
             jQuery("#chatRecipient").show();
             //update notification
         }
-        jQuery.post("<?php print plugins_url( 'load_messages.php', __FILE__ );?>")
+        jQuery.post("<?php print plugins_url( 'includes/load_messages.php', __FILE__ );?>")
             .done(function( data ) {
                 jQuery("#inbox").html(data);
             });
@@ -253,7 +253,7 @@ function chat_action_javascript() { ?>
             jQuery("#inbox").show();
 
             //reload messages
-            jQuery.post("<?php print plugins_url( 'load_messages.php', __FILE__ );?>")
+            jQuery.post("<?php print plugins_url( 'includes/load_messages.php', __FILE__ );?>")
                 .done(function( data ) {
                     jQuery("#inbox").html(data);
                 });
@@ -269,7 +269,7 @@ function chat_action_javascript() { ?>
             jQuery("#inbox").show();
 
             //reload messages
-            jQuery.post("<?php print plugins_url( 'load_messages.php', __FILE__ );?>")
+            jQuery.post("<?php print plugins_url( 'includes/load_messages.php', __FILE__ );?>")
                 .done(function( data ) {
                     jQuery("#inbox").html(data);
                 });
@@ -317,7 +317,7 @@ function chat_action_javascript() { ?>
             var last_message = jQuery("#chatForm").attr("last_message");
 
             jQuery.ajax({
-                    url: "<?php print plugins_url( 'check_new.php', __FILE__ );?>" + "?author=" + author + "&recipient=" + recipient + "&last_message=" + last_message,
+                    url: "<?php print plugins_url( 'includes/check_new.php', __FILE__ );?>" + "?author=" + author + "&recipient=" + recipient + "&last_message=" + last_message,
                     dataType: "json",
                 success: function(data) {
 
@@ -423,7 +423,7 @@ function chat_action_javascript() { ?>
             chat.data.jspAPI.scrollToBottom(true);
 
             //send chat to user
-            jQuery.post("<?php print plugins_url( 'create_message.php', __FILE__ );?>",
+            jQuery.post("<?php print plugins_url( 'includes/create_message.php', __FILE__ );?>",
                 {
                     author: params.author_id,
                     username: params.author,

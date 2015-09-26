@@ -1,5 +1,5 @@
 <?php
-require(realpath(dirname(__FILE__)).'/../../../wp-blog-header.php');
+require(realpath(dirname(__FILE__)) . '/../../../../wp-blog-header.php');
 ?>
 
 <table cellspacing="0">

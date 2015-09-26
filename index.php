@@ -10,11 +10,11 @@
  * License: GPL2
  */
 
-require_once('functions.php');
-require_once('message_post_type.php');
-require_once('feedback_notification.php');
-require_once('add_menu.php');
-require_once('chat_widget.php');
+require_once('includes/functions.php');
+require_once('includes/message_post_type.php');
+require_once('includes/feedback_notification.php');
+require_once('includes/add_menu.php');
+require_once('includes/chat_widget.php');
 
 /*
  * Load assets
