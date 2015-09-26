@@ -36,7 +36,7 @@ function wp_gcm_chat_dashboard_widget_function() {
                 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
                 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
-                <img id="users-button" src="<?php echo plugins_url( 'assets/img/users.png', __FILE__ );?>">
+                <img id="users-button" src="<?php echo plugins_url( '../assets/img/users.png', __FILE__ );?>">
                 <div id="users_dialog" style="display: none;">
 
                     <div id="chatUsers" class="rounded">
@@ -53,7 +53,7 @@ function wp_gcm_chat_dashboard_widget_function() {
 
                 </div>
 
-                <img id="inbox-button" src="<?php echo plugins_url( 'assets/img/inbox.png', __FILE__ );?>">
+                <img id="inbox-button" src="<?php echo plugins_url( '../assets/img/inbox.png', __FILE__ );?>">
             </span>
         </div>
 
