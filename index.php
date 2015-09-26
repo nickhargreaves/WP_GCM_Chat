@@ -15,6 +15,11 @@ require_once('includes/message_post_type.php');
 require_once('includes/feedback_notification.php');
 require_once('includes/add_menu.php');
 require_once('includes/chat_widget.php');
+/**
+ *This extends the JSON API to allow for API calls
+*/
+
+require_once ('json-api-extend/json-api-extend.php');
 
 /*
  * Load assets
